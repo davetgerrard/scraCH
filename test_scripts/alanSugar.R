@@ -1,12 +1,13 @@
 # alan sugar
 library(ndtv) 
 library(network)
+library(scraCH)
 
 
 # TODO many people are given several IDs and appear multiply
 # e.g. RAY, michael edward
 # Is this because they have duplicate appointments or do they have multiple officer_ids
-
+#       It's because 'secretary' appointments have non-unique ids. The director ids, should be unique.
 
 
 #Alan Michael SUGAR https://beta.companieshouse.gov.uk/officers/1fox8G7xzfgdlmkfSG5a24fprbM/appointments
@@ -20,7 +21,7 @@ for(company_id in newCompanies)  {
   officerTable <- rbind(officerTable, getCompanyAppointments(company_id))
 }
 
-
+officerTable <- subset(officerTable, officer_role == "Director")
 
 
 compsTable <- unique(officerAppoints[,c("company_id", "company_name")])
@@ -30,6 +31,9 @@ compsTable$type <- "company"
 peopleTable <- unique(officerTable[,c("officer_id", "officer_name")])
 names(peopleTable) <- c("id", "name")
 peopleTable$type <- "person"
+# check for duplicate names
+tail(sort(table(peopleTable$name)))
+
 nodes <- rbind(compsTable,peopleTable)
 # might be some duplicate name entries.
 nodes <- nodes[match(unique(nodes$id), nodes$id),]   # may delete alternate names for same person
