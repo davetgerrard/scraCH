@@ -40,11 +40,31 @@ officerTable[grep("RAY", officerTable$officer_name),c("officer_id", "officer_nam
 officer_id <- "Bwx3j9lLWQRa33DqXJgPMV56BE8"
 focalNetwork <- networkFromOfficerId(officer_id)
 
+plot(focalNetwork)
 
 
+# now try it on someone with many connections
+# yDYw1ffWuspV8MVb4WOT9TTGr5A
 
+officer_id <- "yDYw1ffWuspV8MVb4WOT9TTGr5A"
+focalNetwork <- networkFromOfficerId(officer_id)
+
+plot(focalNetwork)
+
+render.d3movie(focalNetwork, vertex.tooltip = focalNetwork %v% 'name', vertex.sides=focalNetwork %v% 'sides', vertex.col=focalNetwork %v% 'col',
+               launchBrowser=F, filename="CC_McGill.FULL.html")
+
+
+# Ian Rapley (one of two IDs
+officer_id <- "7AAAn6kfdwEQa1-0NI4KOQ-ci64"
+focalNetwork <- networkFromOfficerId(officer_id)
+
+plot(focalNetwork)
+render.d3movie(focalNetwork, vertex.tooltip = focalNetwork %v% 'name', vertex.sides=focalNetwork %v% 'sides', vertex.col=focalNetwork %v% 'col',
+               launchBrowser=F, filename="I_Rapley.1.html")
 
 
 # TODO - Build caching facility storing parsed queries as dated local files. e.g. scraCH.company.company_id.2016-01-01.tsv
-
+# TODO - stats on appointments (distribution of appointment lengths. (or gannt chart style?)
+# TODO - find company directors with most directorships.
 
